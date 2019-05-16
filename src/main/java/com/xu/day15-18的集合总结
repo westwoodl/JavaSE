@@ -1,0 +1,19 @@
+Collection
+    List：（有序，可重复，有索引）
+        ArrayList：（数组实现，查找快）
+        LinkedList：（链表实现，增删快）
+        Vector：（数组实现，线程安全，性能差）
+    Set：（无序，无索引，无重复）
+        HashSet：（散列表实现，没有顺序，不可重复（取决于hashCode和equals方法））
+            LinkedHashSet（链表和散列表实现，取出顺序等于存入的顺序）
+        TreeSet：（二叉树实现，排序取决于compareTo方法）
+
+Map
+    HashMap
+        LinkedHashMap
+    TreeMap
+    Hashtable
+
+
+
+https://images2015.cnblogs.com/blog/1010726/201706/1010726-20170621004734695-988542448.png

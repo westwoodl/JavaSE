@@ -1,0 +1,13 @@
+day18后增加了 @see ClassName#MethodName()  @deprecated
+doc会更加规范
+
+                            作为装饰者的缓冲流
+
+    FileInputStream和BufferInputStream 读取一个有56字节数据的文本文件，while都进
+行了56次。初步猜测为BufferedInputStream用一次io操作将1024*8个字节存入数组，每次
+write的时候从数组内取出一个字节。所以看上去，这两个类进行都进行了56次循环，但是他们
+的io操作次数是不一样的。
+
+                            递归
+
+    方法return就弹栈，方法调用过多，栈内存溢出
