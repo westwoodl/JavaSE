@@ -26,7 +26,5 @@ public class Demo6_IOSRW转换流 {
                 new BufferedReader(new InputStreamReader(new FileInputStream("utf-8.txt"), "utf-8"));
         BufferedWriter bw =
                 new BufferedWriter(new OutputStreamWriter(new FileOutputStream("gbk.txt"), "gbk"));
-
-
     }
 }
