@@ -13,22 +13,24 @@ public class Demo7_递归 {
         haha(new File("F:\\git"), new StringBuffer(""));
     }
 
+    int c  = 0;
     /**
      * 文件夹s 我哭辽，写了挺久，但最终也还是写出来了
      */
     public void haha(File file, StringBuffer t) {
         if (!file.exists()) throw new RuntimeException("没有该文件!");
         else if (file.isFile()) {
-            System.out.println(t.append("  |") + file.getName() + "(file.properties)");
-            t.delete(t.length() - 3, t.length());
+            System.out.println(t.append("  ") + "" + c + "/" + file.getName() + "(fil)");
+            t.delete(t.length() - 2, t.length());
             return;
         }
         if (file.isDirectory()) {
-            System.out.println(t.append("  |") + file.getName() + "(dir)");
+            System.out.println(t.append("  ") + "" + c++ + "/" + file.getName() + "(dir)");
             for (File f : file.listFiles()) {
                 haha(f, t);
             }
-            t.delete(t.length() - 3, t.length());
+            c--;
+            t.delete(t.length() - 2, t.length());
         }
     }
 
