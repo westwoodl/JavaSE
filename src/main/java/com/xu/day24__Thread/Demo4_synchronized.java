@@ -2,7 +2,7 @@ package com.xu.day24__Thread;
 
 /**
  * 同步代码块锁
- * synchronized(s){//可以是任意对象，多个同步代码块时，传相同对象
+ * synchronized(s){//可以是任意对象，多个同步代码块时，传相同对象（对该对象进行锁定，不同对象起不到同步的作用）
  * {@link #print1()} {@link #print2()}
  * }
  * 同步方法锁:
