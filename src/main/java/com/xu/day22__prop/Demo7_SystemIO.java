@@ -1,6 +1,4 @@
-package com.xu.day22__;
-
-import org.junit.Test;
+package com.xu.day22__prop;
 
 import java.io.IOException;
 import java.io.InputStream;

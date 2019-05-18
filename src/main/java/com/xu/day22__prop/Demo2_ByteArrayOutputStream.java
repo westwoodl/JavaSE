@@ -1,4 +1,4 @@
-package com.xu.day22__;
+package com.xu.day22__prop;
 
 import org.junit.Test;
 

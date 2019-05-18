@@ -1,8 +1,7 @@
-package com.xu.day22__;
+package com.xu.day22__prop;
 
 import org.junit.Test;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
