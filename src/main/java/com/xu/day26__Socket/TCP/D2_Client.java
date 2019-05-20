@@ -29,7 +29,8 @@ public class D2_Client {
         bw.write("I am Client\r\n");
         bw.flush();//
         /*
-         flush准确的说不是因为flush方法的问题，
+         flush
+         准确的说不是因为flush方法的问题，
          而是因为服务器端接受数据时使用的readLine()
          方法必须要接收到一个换行符才能读取一行，
          */
