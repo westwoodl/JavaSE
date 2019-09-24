@@ -11,7 +11,7 @@ import java.util.concurrent.locks.ReentrantLock;
 public class Demo6_ReentrantLock {
     private static ReentrantLock r = new ReentrantLock();
     /**
-     * 你他妈的怎么知道哪个线程对应对应那个Condition
+     * 怎么知道哪个线程对应对应那个Condition
      */
     private static Condition c1 = r.newCondition();
     private static Condition c2 = r.newCondition();
