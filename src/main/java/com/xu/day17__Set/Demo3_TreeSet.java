@@ -2,7 +2,7 @@ package com.xu.day17__Set;
 
 import com.xu.day17__Set.bean.Person;
 import org.junit.Test;
-import util.O;
+
 
 import java.util.Comparator;
 import java.util.TreeSet;
@@ -48,7 +48,7 @@ public class Demo3_TreeSet {
 
 
         TreeSet<Com> ts2 = new TreeSet<>();
-        O.o(ts2);
+
     }
     class Com implements Comparator<String>{
 
