@@ -1,6 +1,6 @@
 package com.xu.day12;
 
-import com.sun.istack.internal.NotNull;
+
 import org.junit.Test;
 
 import java.util.Scanner;
@@ -15,7 +15,4 @@ public class ScannerDemo {
             x = sc.nextInt();
     }
 
-    void test(@NotNull int x){
-
-    }
 }
