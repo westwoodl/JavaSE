@@ -19,8 +19,16 @@ import java.util.stream.Stream;
 public class AQSTest {
 
     /**
+     * AQS (AbstractQueuedSynchronizer 抽象同步队列) {@link AbstractQueuedSynchronizer}
+     * 基于CLH双向链表队列，用volatile修饰共享变量state，线程通过CAS去改变状态符，成功则获取锁成功，失败则进入等待队列，等待被唤醒。
+     *
+     * 1.对于ReentrantLock来说，state可以用来表示当前线程获取锁的可重入次数。
+     * 2.对于读写锁 ReentrantReadWriteLock来说 state 16位表示读状态，也就是获
+     * 取该读锁的次数，低 16 位表示获取到写锁的线程的可重入次数。
+     * 3.对于semaphore来说，state用来表示当前可用信号的个数。
+     * 4.对于 CountDownlatch 来说，state 来表示计数器当前的值
+     *
      * 自旋锁、互斥锁、读锁写锁、条件产量、信号量、栅栏都是AQS的衍生物
-     * AQS就是基于CLH队列，用volatile修饰共享变量state，线程通过CAS去改变状态符，成功则获取锁成功，失败则进入等待队列，等待被唤醒。
      */
 
     @Test
@@ -118,6 +126,9 @@ public class AQSTest {
         }
     }
 
+    /**
+     *  人生如梦 一樽还酹江月
+     */
     @Test
     public void test_stream() {
         // 为null也不会发生NPE
