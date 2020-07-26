@@ -1,7 +1,5 @@
 package com.bf.d5_queue;
 
-import com.bf.d6.图片生成;
-
 import java.util.concurrent.ArrayBlockingQueue;
 
 /**
