@@ -3,6 +3,7 @@ package com.bf.d5_queue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 /**
+ * {@link java.util.concurrent.BlockingQueue}
  * 使用独占锁实现
  * 通过两个ReentrantLock 控制元素入队和出队的原子性
  *

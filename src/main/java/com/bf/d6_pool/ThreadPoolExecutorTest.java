@@ -44,19 +44,23 @@ public class ThreadPoolExecutorTest {
      */
     public static void main(String[] args) {
         ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(
-                2
+                1
                 , 10
                 , 0
                 , TimeUnit.MILLISECONDS
                 , new ArrayBlockingQueue<>(10)
-                , (ThreadFactory) Thread::new
+                , e -> {
+            System.out.println("thread factory");
+            return new Thread(e);
+        }
         );
 
         threadPoolExecutor.execute(() -> {
             for (;;) {
                 System.out.println(Thread.currentThread().getName() + "hh");
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(5000);
+                    break;
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -65,9 +69,11 @@ public class ThreadPoolExecutorTest {
 
         threadPoolExecutor.execute(() -> {
             for (;;) {
-                System.out.println(Thread.currentThread().getName() + "hh");
+                System.out.println(Thread.currentThread().getName() + "hh2");
                 try {
                     Thread.sleep(1000);
+                    Thread.sleep(10000);
+                    break;
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
