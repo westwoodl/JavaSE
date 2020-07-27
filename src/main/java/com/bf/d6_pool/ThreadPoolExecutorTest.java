@@ -21,6 +21,20 @@ public class ThreadPoolExecutorTest {
      *     firstTask：为executor中的Runnable对象
      *     thread：此线程为ThreadFactory创建的线程，在addWork时会start此线程，执行work中的run方法
      *
+     * pool的状态：
+     *      RUNNING 接受新任务并且处理阻塞队列里的任务
+     *      SHUTDOWN：拒绝新任务但是处理阻 队列里的任务
+     *      STOP：拒绝新任务并且 弃阻塞队列 的任 ，同时会中断正在处理的任务。
+     *      TIDYING 所有任务都执行完（包含阻 队列里面的任务）后当前线程池活动线程数为0 将要调用 terminated 方法
+     *      TERMINATED 终止状态 terminated 方法调用完成 以后的状态
+     *
+     * 线程池状态转换列举如下
+     *      RUNNING -> SHUTDOWN 显式调用 shutdown()方法 或者隐式调用了 finalize()方法里面的 shutdown（） 方法
+     *      RUNNING SHUTDOWN)- STOP 显式调用 shutdownNow（） 方法
+     *      SHUTDOWN -> TIDYING 当线程池和任务队列都为空时
+     *      STOP -> TIDYING 当线程池为空时
+     *      TIDYING -> TERMINATED 当terminated() hook 方法执行完成时
+     *
      * （getTask和addWork（null， false）遥相呼应）
      * Q. 线程池是什么时候创建线程的？
      * A.任务提交的时候
