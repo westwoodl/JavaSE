@@ -1,11 +1,17 @@
 package com.spring;
 
+import com.spring.bean.Dog;
 import org.springframework.beans.annotation.AnnotationBeanUtils;
+import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.validation.annotation.Validated;
 
 import java.lang.reflect.AnnotatedElement;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author xu rongchao
@@ -13,6 +19,7 @@ import java.lang.reflect.AnnotatedElement;
  */
 @ComponentScan("com.spring.bean")
 @Configurable
+@EnableAspectJAutoProxy
 public class Application {
 
     /**
@@ -21,7 +28,9 @@ public class Application {
      * 3. @AutoWire @Value
      * 4. xxxAware: 想要使用Spring容器底层的一些组件（ApplicationContext BeanFactory）都是xxxAwareProcessor实现的 ApplicationContextAwareProcessor
      * 5. @Profile 指定组件在哪个环境下才能被注册到容器中 -Dspring.profiles.active=test
-     *
+     */
+
+    /**
      * AOP
      * 使用
      * 1. @Aspect
@@ -59,6 +68,7 @@ public class Application {
      *             4) BeanPostProcessor(AnnotationAwareAspectJAutoProxyCreator) 创建成功
      *         7） 把BeanPostProcessor注册到BeanFactory中
      *             beanFactory.addBeanPostProcessor(postProcessor)
+     * ------------------ 以上就是创建和注册AnnotationAwareAspectJAutoProxyCreator ---------------------------
      *    4) finishBeanFactoryInitialization(beanFactory); 完成BeanFactory初始化工作；创建剩下的单实例Bean
      *        1） 遍历获取容器中所有的Bean，依次创建对象getBean(beanName)
      *            getBean -> doGetBean() -> getSingleton() ->
@@ -70,9 +80,13 @@ public class Application {
      *                1) resolveBeforeInstantiation(beanName, mbdToUse)解析BeforeInstantiat
      *                希望后置处理器在此能返回一个代理对象；如果能返回代理对象就使用，如果不能就继续
      *                    1) 后置处理器尝试返回对象
-     *                        bean
+     *                        if (bean!=null) {
+     *                            bean = applyBeanPostProcessorAfterInitialization(bean, beanDe)
+     *                        }
      *                2) doCreateBean(beanName, mbdToUse, args)真正的去创建一个，和3.6流程一样
      *
+     *
+     * AnnotationAwareAspectJAutoProxyCreator 是通过 @EnableAspectJAutoProxy注解中的@Import 注入到spring容器中的
      * AnnotationAwareAspectJAutoProxyCreator[InstantiationAwareBeanPostProcessor]
      * 1. 每一个bean创建之前，调用postProcessBeforeInstantiation()
      *     1. 判断当前bean是否在adviseBean中（保存了所有增强Bean）
@@ -93,12 +107,16 @@ public class Application {
      *             3. 创建代理对象 （JdkDynamicApoProxy ObjectCglibAopProxy）
      *         4. 给容器中返回当前组件使用cglib增强了的组件
      *         5. 以后容器中获取到的就是这个组件的代理对象，之后执行的都是被增强的方法
+     * 3. 目标方法执行
+     *     容器中保存了组件的代理对象（cglib增强后的对象）这个对象里面保存了详细信息 比如增强器，目标对象，xxx
+     *     1. cglib 
+     *
      *
      */
     public static void main(String[] args) {
 //        AnnotationBeanUtils.copyPropertiesToBean();
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(Application.class);
 
-//        AnnotatedElement
+        System.out.println(context.getBean(Dog.class));
     }
 }
