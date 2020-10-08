@@ -82,8 +82,59 @@ public class ExtApplication {
      * 6. registerBeanPostProcessors， 注册BeanPostProcessor
      * 7. initMessageSource() 初始化MessageSource组件（国际化功能：消息绑定，消息解析）
      * 8. initApplicationEventMulticaster() 初始化事件派发器
+     *     1. 获取BeanFactory
+     *     2. 从BeanFactory中获取applicationEventMulticaster的ApplicationEventMulticaster
+     *     3. 如果上一步没有配置，创建一个SimpleApplicationEventMulticaster
+     *     4. registerSingleton
+     * 9. onRefresh() 留给子类 AnnotationConfigApplicationContext没有重写这个方法，啥也没干
+     * 10. registerListener()
+     *     1. 从容器中拿到ApplicationListener类型的所有bean的name
+     *     2. 将每个监听器添加到事件派发器中
+     *     3. 派发之前产生的事件
+     * 11. finishBeanFactoryInitialization() 初始化所有剩下的单实例bean {@link AbstractApplicationContext#finishBeanFactoryInitialization(org.springframework.beans.factory.config.ConfigurableListableBeanFactory)}
+     *     1. beanFactory.preInstantiateSingletons();
+     *         1. 获取容器中的所有bean
+     *         2. 获取bean的定义信息 RootBeanDefinition
+     *         3. 遍历所有的 not abstract && singleton && not lazy-init beanName 然后 getBean()
+     *         doGetBean(name, null, null, false)
+     *         *   1. 从缓存中获取 singleton bean
+     *         *   2. createBean:
+     *         *       1. 【apply】InstantiationAwareBeanPostProcessor (给AOP一个机会返回对象，如果导入了aop)
+     *         *       2. doCreateBean()
+     *         *       *   1. 【apply】 MergedBeanDefinitionPostProcessors
+     *         *       *   2. populateBean 属性赋值
+     *         *       *       1. InstantiationAwareBeanPostProcessor
+     *         *       *       postProcessAfterInstantiation postProcessPropertyValues
+     *         *       *       2. applyPropertyValues 赋值
+     *         *       *   3. initializeBean 初始化
+     *         *       *       1. invokeAwareMethods，如果当前bean实现了Aware接口，则执行
+     *         *       *       2. 【apply】 BeanPostProcessorsBeforeInitialization
+     *         *       *       3. invokeInitMethods （调用bean的init方法或者 InitializationBean的afterPropertiesSet）
+     *         *       *       3. 【apply】 BeanPostProcessorsAfterInitialization
+     *         *       *   4. registerDisposableBeanIfNecessary 注册销毁方法
+     *         *       3. 将创建的Bean添加到缓存中singletonObject
+     *         4. apply SmartInitializingSingleton: 这个有什么用呢 ?对被注册到ioc的bean的注解扫描 (EventListener注解扫描，)
+     * 12. finishRefresh() 完成 BeanFactory的初始化创建工作，IOC容器创建完成
+     *     1. initLifecycleProcessor
+     *     2. getLifecycleProcessor().onRefresh();
+     *     3. publishEvent
      *
-     * @param args
+     * 四、总结
+     * 1. Spring容器在启动时，保存所有注册进来的Bean定义信息
+     *     1. xml注册 bean定义信息
+     *     2. 注解 @Component @Bean
+     * 2. Spring容器会在合适的时机创建Bean
+     *     1. 用到这个bean的时候
+     *     2. 统一创建所有 剩下的bean
+     * 3. 后置处理器 （核心思想）
+     *     AutoWiredAnnotationBeanPostProcessor
+     *     {@link org.springframework.aop.aspectj.annotation.AnnotationAwareAspectJAutoProxyCreator}
+     *     ....
+     *     增强的功能注解
+     * 4. 事件驱动 ApplicationListener
+     *
+     *
+     *
      */
     public static void main(String[] args) {
         System.out.println(Arrays.toString(args));
