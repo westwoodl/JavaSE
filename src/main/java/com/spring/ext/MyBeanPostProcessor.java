@@ -14,6 +14,10 @@ import java.util.Arrays;
 @Component
 public class MyBeanPostProcessor implements BeanFactoryPostProcessor {
 
+    public MyBeanPostProcessor() {
+        System.out.println("MyBeanPostProcessor");
+    }
+
     @Override
     public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
         System.out.println("bean definition count" + Arrays.toString(beanFactory.getBeanDefinitionNames()));
