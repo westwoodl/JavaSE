@@ -13,6 +13,7 @@ public class DelayQueueTest {
     /**
      * 无界阻塞延迟队列 ，队列中的每个元素都有个过期时间，
      * 当从队列获取元素时，只有过期元素才会出队列。队列头元素是最快要过期的元素。
+     * 内部数据结构为大顶堆，使用compareTo构建大顶堆
      *
      * 当getDelay() == 0时出队
      * @param args
