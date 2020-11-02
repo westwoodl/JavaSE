@@ -16,6 +16,7 @@ public class AopApplication {
 
     /**
      * aop 源码：
+     * 方法调用时执行的是spring的增强类
      * org.springframework.aop.framework.ReflectiveMethodInvocation#proceed()
      * 调用org.aopalliance.intercept.MethodInterceptor的实现类
      */
