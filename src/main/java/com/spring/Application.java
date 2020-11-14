@@ -3,10 +3,12 @@ package com.spring;
 import com.spring.bean.Dog;
 import org.springframework.beans.annotation.AnnotationBeanUtils;
 import org.springframework.beans.factory.BeanFactory;
+import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.validation.annotation.Validated;
 
 import java.lang.reflect.AnnotatedElement;
@@ -20,6 +22,7 @@ import java.util.Map;
 @ComponentScan("com.spring.bean")
 @Configurable
 @EnableAspectJAutoProxy
+@EnableTransactionManagement
 public class Application {
 
     /**
@@ -116,7 +119,8 @@ public class Application {
     public static void main(String[] args) {
 //        AnnotationBeanUtils.copyPropertiesToBean();
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(Application.class);
-
+        context.getBeanFactory().destroyBean(context.getBean(Dog.class));
+        System.out.println(context.getBean(Dog.class));
         System.out.println(context.getBean(Dog.class));
     }
 }
