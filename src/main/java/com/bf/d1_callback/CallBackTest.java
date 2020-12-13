@@ -18,8 +18,10 @@ public class CallBackTest {
 
         @Override
         public Object call() throws Exception {
+            System.out.println("call");
             Thread.sleep(3000);
-            return 1;
+            System.out.println("call2");
+            throw new IllegalArgumentException();
         }
     }
 
@@ -34,7 +36,17 @@ public class CallBackTest {
 
         new Thread(futureTask).start();
 
-        System.out.println(futureTask.get());
+        // System.out.println(futureTask.get());
+        new Thread(()->{
+            try {
+                Thread.sleep(4000);
+                System.out.println("开始获取"+futureTask.get());
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                System.out.println(e);
+            }
+        }).start();
         System.out.println(2);
 
         Thread t = new Thread(new Runnable() {
