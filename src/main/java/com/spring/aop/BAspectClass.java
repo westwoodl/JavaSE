@@ -1,8 +1,10 @@
 package com.spring.aop;
 
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
+import org.springframework.core.Ordered;
+import org.springframework.core.PriorityOrdered;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 /**
@@ -11,36 +13,26 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @Aspect
-public class AspectClass {
+@Order(Ordered.LOWEST_PRECEDENCE)
+public class BAspectClass {
 
     @Pointcut("execution(* com.spring.aop.AopClass.*(..))")
     public void pointCut(){}
 
     @Before("pointCut()")
     public void doBefore(JoinPoint joinPoint){
-        System.out.println("A-Before Advice...");
-    }
-
-
-    @Around("pointCut()")
-    public Object around(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
-        System.out.println("A-around 1");
-        try {
-            return proceedingJoinPoint.proceed();
-        } finally {
-            System.out.println("A-around 2");
-        }
+        System.out.println("B-Before Advice...");
     }
 
     @After("pointCut()")
     public void doAfter(JoinPoint joinPoint){
-        System.out.println("A-After Advice...");
+        System.out.println("B-After Advice...");
     }
 
 
     @AfterThrowing("pointCut()")
     public void doAfterThrowing(JoinPoint joinPoint){
-        System.out.println("A-AfterThrowing Advice...");
+        System.out.println("B-AfterThrowing Advice...");
     }
 
 }

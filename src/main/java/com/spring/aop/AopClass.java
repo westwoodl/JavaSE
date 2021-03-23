@@ -9,6 +9,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class AopClass {
 
+    public AopClass() {
+        System.out.println("AopClass 构造方法");
+    }
 
     public void someMethod() {
         System.out.println("someMethod");
